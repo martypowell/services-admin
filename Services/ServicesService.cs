@@ -8,7 +8,7 @@ namespace services.Services
 {
     public class ServicesService : ServicesServiceInterface
     {
-        public IEnumerable<Service> GetService()
+        public IEnumerable<Service> GetServices()
         {
             throw new NotImplementedException();
         }

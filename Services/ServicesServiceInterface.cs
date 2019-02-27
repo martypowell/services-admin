@@ -5,7 +5,7 @@ namespace services.Services
 {
     public interface ServicesServiceInterface
     {
-        IEnumerable<Service> GetService();
+        IEnumerable<Service> GetServices();
         Service SaveService();
     }
 }
