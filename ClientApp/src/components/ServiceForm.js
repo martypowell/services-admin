@@ -21,11 +21,14 @@ const keywords = ["street", "road", "safety", "pothole", "snow"];
 
 const ServiceForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
+  const saveService = service => {
+    console.log(`saved service:`, service);
+  };
   const handleSubmit = submitEvent => {
     submitEvent.preventDefault();
     validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        saveService(values);
       }
     });
   };
