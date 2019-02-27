@@ -91,10 +91,7 @@ const ServiceForm = props => {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator("isPopularService")(
-            <Switch
-              checkedChildren="Is most popular service"
-              unCheckedChildren="Isn't so popular"
-            />
+            <Checkbox>Is Most Popular Service?</Checkbox>
           )}
         </Form.Item>
         <Form.Item>
