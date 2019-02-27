@@ -8,10 +8,34 @@ namespace services.Services
 {
     public class ServicesService : ServicesServiceInterface
     {
-        public IEnumerable<Service> GetServices()
+        public IEnumerable<Service> GetServices() => new List<Service>()
         {
-            throw new NotImplementedException();
-        }
+            new Service()
+            {
+                Id = 1,
+                Name = "Report a Pothole",
+                Agency = "Public Works",
+                Keywords = new List<string>()
+                {
+                    "pothole",
+                    "street",
+                    "road"
+                },
+                IsMostPopularService = true
+            },
+            new Service() {
+                Id = 2,
+                Name = "Icy Condtions",
+                Agency = "Public Works",
+                Keywords = new List<string>()
+                {
+                    "ice",
+                    "street",
+                    "road"
+                },
+                IsMostPopularService = true
+            }
+        };
 
         public Service SaveService()
         {
