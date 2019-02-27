@@ -14,8 +14,9 @@ namespace services.Controllers
     {
         private readonly IMemoryCache _cache;
         private readonly IServicesService _servicesService;
-        private const string SERVICE_LIST_CACHE_KEY = "services-list";
-        private const string SERVICE_PREFIX_CACHE_KEY = "service-";
+        private const string SERVICE_PREFIX_CACHE_KEY = "service";
+        private readonly string SERVICE_LIST_CACHE_KEY = $"{SERVICE_PREFIX_CACHE_KEY}-list";
+        
 
         public ServicesController(IMemoryCache memoryCache, IServicesService servicesService)
         {
@@ -49,7 +50,7 @@ namespace services.Controllers
         [HttpGet("{id}", Name = "Get")]
         public Service Get(int id)
         {
-            var cacheKey = SERVICE_PREFIX_CACHE_KEY + id.ToString();
+            var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{id.ToString()}";
 
             // Look for cache key.
             if (!_cache.TryGetValue(cacheKey, out Service service))
