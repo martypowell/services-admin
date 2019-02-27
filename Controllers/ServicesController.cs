@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using services.Models;
+using services.Services;
 
 namespace services.Controllers
 {
@@ -11,11 +10,20 @@ namespace services.Controllers
     [ApiController]
     public class ServicesController : ControllerBase
     {
+        private readonly IServicesService _servicesService;
+
+        public ServicesController(IServicesService servicesService)
+        {
+            _servicesService = servicesService;
+        }
+
         // GET: api/Services
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Service> Get()
         {
-            return new string[] { "value1", "value2" };
+            var services = _servicesService.GetServices();
+
+            return services;
         }
 
         // GET: api/Services/5
