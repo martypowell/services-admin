@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using services.Models;
 
 namespace services.Services
 {
     public class ServicesService : IServicesService
     {
+        public Service GetService(int id) =>
+            GetServices().FirstOrDefault(x => x.Id == id);
+
         public IEnumerable<Service> GetServices() => new List<Service>()
         {
             new Service()
