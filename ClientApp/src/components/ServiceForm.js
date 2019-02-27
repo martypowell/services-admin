@@ -20,8 +20,15 @@ const departments = [
 const keywords = ["street", "road", "safety", "pothole", "snow"];
 
 const ServiceForm = props => {
-  const { getFieldDecorator } = props.form;
-  const handleSubmit = () => console.log;
+  const { getFieldDecorator, validateFields } = props.form;
+  const handleSubmit = submitEvent => {
+    submitEvent.preventDefault();
+    validateFields((err, values) => {
+      if (!err) {
+        console.log("Received values of form: ", values);
+      }
+    });
+  };
   return (
     <section>
       <h1>Add a Service</h1>
