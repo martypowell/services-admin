@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using services.Providers;
 using services.Services;
 
 namespace services
@@ -26,6 +27,7 @@ namespace services
             services.AddMemoryCache();
 
             services.AddScoped<IServicesService, ServicesService>();
+            services.AddScoped<IServicesProvider, JSONFileServiceProvider>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

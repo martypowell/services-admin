@@ -6,10 +6,10 @@ using services.Models;
 
 namespace services.Providers
 {
-    public interface IJSONFileServiceProvider
+    public interface IServicesProvider
     {
         IEnumerable<Service> GetServices();
-        bool AddService(
+        Service AddService(
             Service Service);
     }
 }
