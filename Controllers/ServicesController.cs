@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using services.Models;
 using services.Services;
 
@@ -10,10 +12,13 @@ namespace services.Controllers
     [ApiController]
     public class ServicesController : ControllerBase
     {
+        private readonly IMemoryCache _cache;
         private readonly IServicesService _servicesService;
+        private const string SERVICE_LIST_CACHE_KEY = "services-list";
 
-        public ServicesController(IServicesService servicesService)
+        public ServicesController(IMemoryCache memoryCache, IServicesService servicesService)
         {
+            _cache = memoryCache;
             _servicesService = servicesService;
         }
 
@@ -21,7 +26,20 @@ namespace services.Controllers
         [HttpGet]
         public IEnumerable<Service> Get()
         {
-            var services = _servicesService.GetServices();
+            // Look for cache key.
+            if (!_cache.TryGetValue(SERVICE_LIST_CACHE_KEY, out IEnumerable<Service> services))
+            {
+                // Key not in cache, so get data.
+                services = _servicesService.GetServices();
+
+                // Set cache options.
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    // Keep in cache for this time, reset time if accessed.
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(3));
+
+                // Save data in cache.
+                _cache.Set(SERVICE_LIST_CACHE_KEY, services, cacheEntryOptions);
+            }
 
             return services;
         }
