@@ -19,11 +19,13 @@ const departments = [
 ];
 const keywords = ["street", "road", "safety", "pothole", "snow"];
 
+const saveService = service => {
+  console.log(`saved service:`, service);
+};
+
 const ServiceForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
-  const saveService = service => {
-    console.log(`saved service:`, service);
-  };
+
   const handleSubmit = submitEvent => {
     submitEvent.preventDefault();
     validateFields((err, values) => {
@@ -41,7 +43,7 @@ const ServiceForm = props => {
             rules: [
               {
                 required: true,
-                message: "Please input the name of your service"
+                message: "Input the name of your service"
               }
             ]
           })(<Input placeholder="ServiceName" />)}
@@ -51,7 +53,7 @@ const ServiceForm = props => {
             rules: [
               {
                 required: true,
-                message: "Please select an agency"
+                message: "Select an agency"
               }
             ]
           })(
@@ -82,7 +84,7 @@ const ServiceForm = props => {
             rules: [
               {
                 required: true,
-                message: "Please select at least one keyword"
+                message: "Select at least one keyword"
               }
             ]
           })(
