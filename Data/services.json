@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "Report a Pothole",
+    "Agency": "Public Works",
+    "Keywords": [ "pothole", "street", "road" ],
+    "IsMostPopularService": true
+  },
+  {
+    "Id": 2,
+    "Name": "Icy Conditions",
+    "Agency": "Public Works",
+    "Keywords": ["ice", "street", "road"],
+    "IsMostPopularService": true
+  }
+]
