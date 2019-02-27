@@ -10,7 +10,7 @@ namespace services.Services
         public Service GetService(int id) =>
             GetServices().FirstOrDefault(x => x.Id == id);
 
-        public IEnumerable<Service> GetServices() => new List<Service>()
+        public List<Service> Services => new List<Service>()
         {
             new Service()
             {
@@ -39,9 +39,15 @@ namespace services.Services
             }
         };
 
-        public Service SaveService(Service service)
+        public IEnumerable<Service> GetServices() => Services;
+
+        public Service AddService(Service service)
         {
-            throw new NotImplementedException();
+            service.Id = Services.Max(x => x.Id) + 1;
+
+            Services.Add(service);
+
+            return service;
         }
     }
 }

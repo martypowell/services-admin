@@ -16,6 +16,9 @@ namespace services.Controllers
         private readonly IServicesService _servicesService;
         private const string SERVICE_PREFIX_CACHE_KEY = "service";
         private readonly string SERVICE_LIST_CACHE_KEY = $"{SERVICE_PREFIX_CACHE_KEY}-list";
+        private static MemoryCacheEntryOptions cacheEntryOptions = new MemoryCacheEntryOptions()
+            // Keep in cache for this time, reset time if accessed.
+            .SetSlidingExpiration(TimeSpan.FromMinutes(3));
         
 
         public ServicesController(IMemoryCache memoryCache, IServicesService servicesService)
@@ -33,11 +36,6 @@ namespace services.Controllers
             {
                 // Key not in cache, so get data.
                 services = _servicesService.GetServices();
-
-                // Set cache options.
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    // Keep in cache for this time, reset time if accessed.
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(3));
 
                 // Save data in cache.
                 _cache.Set(SERVICE_LIST_CACHE_KEY, services, cacheEntryOptions);
@@ -58,11 +56,6 @@ namespace services.Controllers
                 // Key not in cache, so get data.
                 service = _servicesService.GetService(id);
 
-                // Set cache options.
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    // Keep in cache for this time, reset time if accessed.
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(3));
-
                 // Save data in cache.
                 _cache.Set(cacheKey, service, cacheEntryOptions);
             }
@@ -72,10 +65,24 @@ namespace services.Controllers
 
         // POST: api/Services
         [HttpPost]
-        public void Post([FromBody] Service service)
+        public ActionResult Post([FromBody] Service service)
         {
-            var service = _servicesService.SaveService(service);
+            var newService = _servicesService.AddService(service);
 
+            if (newService == null)
+            {
+                return BadRequest("Something went wrong adding your service.");
+            }
+
+            var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{newService.Id.ToString()}";
+            // Save data in cache.
+            _cache.Set(cacheKey, newService, cacheEntryOptions);
+
+            _cache.Remove(SERVICE_LIST_CACHE_KEY);
+
+            return Created(
+                $"/api/services/{newService.Id}",
+                newService);
         }
 
         // PUT: api/Services/5

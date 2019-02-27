@@ -22,6 +22,6 @@ namespace services.Services
         /// Save a Service
         /// </summary>
         /// <returns>Returns the saved service with new or updated values.</returns>
-        Service SaveService(Service service);
+        Service AddService(Service service);
     }
 }
