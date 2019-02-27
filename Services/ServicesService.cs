@@ -27,7 +27,7 @@ namespace services.Services
             },
             new Service() {
                 Id = 2,
-                Name = "Icy Condtions",
+                Name = "Icy Conditions",
                 Agency = "Public Works",
                 Keywords = new List<string>()
                 {
@@ -39,7 +39,7 @@ namespace services.Services
             }
         };
 
-        public Service SaveService()
+        public Service SaveService(Service service)
         {
             throw new NotImplementedException();
         }

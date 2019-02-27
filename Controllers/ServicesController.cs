@@ -72,8 +72,10 @@ namespace services.Controllers
 
         // POST: api/Services
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Service service)
         {
+            var service = _servicesService.SaveService(service);
+
         }
 
         // PUT: api/Services/5
