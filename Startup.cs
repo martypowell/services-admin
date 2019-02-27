@@ -23,6 +23,8 @@ namespace services
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddMemoryCache();
+
             services.AddScoped<IServicesService, ServicesService>();
 
             // In production, the React files will be served from this directory
