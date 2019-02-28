@@ -12,6 +12,7 @@ namespace services.Providers
         Service AddService(
             Service service);
         Service UpdateService(
+            int id,
             Service service);
     }
 }
