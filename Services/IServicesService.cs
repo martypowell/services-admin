@@ -23,5 +23,13 @@ namespace services.Services
         /// </summary>
         /// <returns>Returns the saved service with new or updated values.</returns>
         Service AddService(Service service);
+
+        /// <summary>
+        /// Update an existing Service
+        /// </summary>
+        /// <param name="id">Primary Key associated with the service.</param>
+        /// <param name="service">Updated representation of the Existing service.</param>
+        /// <returns></returns>
+        Service UpdateService(int id, Service service);
     }
 }

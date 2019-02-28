@@ -26,5 +26,12 @@ namespace services.Services
 
             return service;
         }
+
+        public Service UpdateService(int id, Service service)
+        {
+            var updatedService = _serviceProvider.UpdateService(id, service);
+
+            return updatedService;
+        }
     }
 }
