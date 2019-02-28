@@ -19,21 +19,34 @@ namespace services
 
         public IConfiguration Configuration { get; }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMemoryCache();
+
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(
+                        MyAllowSpecificOrigins,
+                        builder =>
+                        {
+                            builder.WithOrigins(
+                                "http://localhost",
+                                "http://localhost:3000");
+                        });
+                });
 
             services.AddScoped<IServicesService, ServicesService>();
             services.AddScoped<IServicesProvider, JSONFileServiceProvider>();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +65,7 @@ namespace services
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseMvc(routes =>
             {
