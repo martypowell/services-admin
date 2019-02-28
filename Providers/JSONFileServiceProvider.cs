@@ -27,9 +27,14 @@ namespace services.Providers
 
             services.Add(service);
 
-            File.WriteAllText(dataFilePath, JsonConvert.SerializeObject(services));
+            SaveDataFile(services);
 
             return service;
+        }
+
+        private static void SaveDataFile(List<Service> services)
+        {
+            File.WriteAllText(dataFilePath, JsonConvert.SerializeObject(services));
         }
 
         private JArray GetServicesAsJson()
@@ -46,7 +51,18 @@ namespace services.Providers
 
         public Service UpdateService(Service service)
         {
-            throw new NotImplementedException();
+            var services = GetServices().ToList();
+            var serviceToUpdate = services.FirstOrDefault(x => x.Id == service.Id);
+
+            if (serviceToUpdate != null)
+            {
+                services[services.IndexOf(serviceToUpdate)] = service;
+
+                SaveDataFile(services);
+            }
+
+            // No update was performed
+            return null;
         }
     }
 }
