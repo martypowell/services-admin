@@ -87,8 +87,22 @@ namespace services.Controllers
 
         // PUT: api/Services/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Service service)
         {
+            var updatedService = _servicesService.UpdateService(id, service);
+
+            if (updatedService == null)
+            {
+                return BadRequest("Something went wrong updating your service.");
+            }
+
+            var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{updatedService.Id.ToString()}";
+            // Save data in cache.
+            _cache.Set(cacheKey, updatedService, cacheEntryOptions);
+
+            _cache.Remove(SERVICE_LIST_CACHE_KEY);
+
+            return Ok(updatedService);
         }
 
         // DELETE: api/ApiWithActions/5
