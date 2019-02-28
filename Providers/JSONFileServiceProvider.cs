@@ -43,5 +43,10 @@ namespace services.Providers
             var jsonArray = GetServicesAsJson();
             return jsonArray.ToObject<IEnumerable<Service>>();
         }
+
+        public Service UpdateService(Service service)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

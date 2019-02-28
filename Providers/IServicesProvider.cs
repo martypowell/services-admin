@@ -10,6 +10,8 @@ namespace services.Providers
     {
         IEnumerable<Service> GetServices();
         Service AddService(
-            Service Service);
+            Service service);
+        Service UpdateService(
+            Service service);
     }
 }
