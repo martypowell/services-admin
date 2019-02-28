@@ -16,7 +16,7 @@ namespace services.Controllers
         private readonly IServicesService _servicesService;
         private const string SERVICE_PREFIX_CACHE_KEY = "service";
         private readonly string SERVICE_LIST_CACHE_KEY = $"{SERVICE_PREFIX_CACHE_KEY}-list";
-        private static MemoryCacheEntryOptions cacheEntryOptions = new MemoryCacheEntryOptions()
+        private static readonly MemoryCacheEntryOptions cacheEntryOptions = new MemoryCacheEntryOptions()
             // Keep in cache for this time, reset time if accessed.
             .SetSlidingExpiration(TimeSpan.FromMinutes(3));
         
@@ -74,11 +74,7 @@ namespace services.Controllers
                 return BadRequest("Something went wrong adding your service.");
             }
 
-            var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{newService.Id.ToString()}";
-            // Save data in cache.
-            _cache.Set(cacheKey, newService, cacheEntryOptions);
-
-            _cache.Remove(SERVICE_LIST_CACHE_KEY);
+            ResetCache(newService);
 
             return Created(
                 $"/api/services/{newService.Id}",
@@ -96,11 +92,7 @@ namespace services.Controllers
                 return BadRequest("Something went wrong updating your service.");
             }
 
-            var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{updatedService.Id.ToString()}";
-            // Save data in cache.
-            _cache.Set(cacheKey, updatedService, cacheEntryOptions);
-
-            _cache.Remove(SERVICE_LIST_CACHE_KEY);
+            ResetCache(updatedService);
 
             return Ok(updatedService);
         }
@@ -109,6 +101,18 @@ namespace services.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        private void ResetCache(
+            Service service)
+        {
+            if (service != null)
+            {
+                var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{service.Id.ToString()}";
+                _cache.Set(cacheKey, service, cacheEntryOptions);
+            }
+            
+            _cache.Remove(SERVICE_LIST_CACHE_KEY);
         }
     }
 }
