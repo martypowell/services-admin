@@ -49,16 +49,19 @@ namespace services.Providers
             return jsonArray.ToObject<IEnumerable<Service>>();
         }
 
-        public Service UpdateService(Service service)
+        public Service UpdateService(int id, Service service)
         {
             var services = GetServices().ToList();
-            var serviceToUpdate = services.FirstOrDefault(x => x.Id == service.Id);
+            var serviceToUpdate = services.FirstOrDefault(x => x.Id == id);
 
             if (serviceToUpdate != null)
             {
+                service.Id = id;
                 services[services.IndexOf(serviceToUpdate)] = service;
 
                 SaveDataFile(services);
+
+                return service;
             }
 
             // No update was performed
