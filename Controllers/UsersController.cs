@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using services.Models;
+using services.Services;
 
 namespace services.Controllers
 {
@@ -8,18 +10,18 @@ namespace services.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private IUsersService _usersService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUsersService usersService)
         {
-            _userService = userService;
+            _usersService = usersService;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]User userParam)
         {
-            var user = _userService.Authenticate(userParam.Username, userParam.Password);
+            var user = _usersService.Authenticate(userParam.Username, userParam.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -30,7 +32,7 @@ namespace services.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _userService.GetAll();
+            var users = _usersService.GetAll();
             return Ok(users);
         }
     }
