@@ -24,7 +24,9 @@ namespace services.Controllers
             var user = _usersService.Authenticate(userParam.Username, userParam.Password);
 
             if (user == null)
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
+            }
 
             return Ok(user);
         }
