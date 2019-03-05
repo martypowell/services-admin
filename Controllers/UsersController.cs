@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using services.Models;
 using services.Services;
 
 namespace services.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -31,8 +32,9 @@ namespace services.Controllers
             return Ok(user);
         }
 
+        // GET: api/users
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult Get()
         {
             var users = _usersService.GetAll();
             return Ok(users);
