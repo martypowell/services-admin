@@ -4,7 +4,7 @@ using services.Models;
 
 namespace services.Services
 {
-    public class UserService : IUserService
+    public class UsersService : IUsersService
     {
         public User Authenticate(string username, string password)
         {
