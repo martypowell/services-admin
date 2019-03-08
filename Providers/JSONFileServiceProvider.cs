@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace services.Providers
 {
-    public class JSONFileServiceProvider : IServicesProvider
+    public class JSONFileServiceProvider
     {
         private static readonly string dataFilePath = "./data/services.json";
 
