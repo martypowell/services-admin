@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using services.Models;
 
@@ -8,10 +6,10 @@ namespace services.Providers
 {
     public interface IServicesProvider
     {
-        IEnumerable<Service> GetServices();
-        Service AddService(
+        Task<IEnumerable<Service>> GetServices();
+        Task<Service> AddService(
             Service service);
-        Service UpdateService(
+        Task<Service> UpdateService(
             int id,
             Service service);
     }
