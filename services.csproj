@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK" Version="2.3.55.2" />
+    <PackageReference Include="AWSSDK.Core" Version="3.3.32.1" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.17.12" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
