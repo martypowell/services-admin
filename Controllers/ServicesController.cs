@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,13 +32,13 @@ namespace services.Controllers
 
         // GET: api/Services
         [HttpGet]
-        public IEnumerable<Service> Get()
+        public async Task<IEnumerable<Service>> Get()
         {
             // Look for cache key.
             if (!_cache.TryGetValue(SERVICE_LIST_CACHE_KEY, out IEnumerable<Service> services))
             {
                 // Key not in cache, so get data.
-                services = _servicesService.GetServices();
+                services = await _servicesService.GetServices();
 
                 // Save data in cache.
                 _cache.Set(SERVICE_LIST_CACHE_KEY, services, cacheEntryOptions);
@@ -48,7 +49,7 @@ namespace services.Controllers
 
         // GET: api/Services/5
         [HttpGet("{id}", Name = "Get")]
-        public Service Get(int id)
+        public async Task<Service> Get(int id)
         {
             var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{id.ToString()}";
 
@@ -56,7 +57,7 @@ namespace services.Controllers
             if (!_cache.TryGetValue(cacheKey, out Service service))
             {
                 // Key not in cache, so get data.
-                service = _servicesService.GetService(id);
+                service = await _servicesService.GetService(id);
 
                 // Save data in cache.
                 _cache.Set(cacheKey, service, cacheEntryOptions);
@@ -67,9 +68,9 @@ namespace services.Controllers
 
         // POST: api/Services
         [HttpPost]
-        public ActionResult Post([FromBody] Service service)
+        public async Task<ActionResult> Post([FromBody] Service service)
         {
-            var newService = _servicesService.AddService(service);
+            var newService = await _servicesService.AddService(service);
 
             if (newService == null)
             {
@@ -85,9 +86,9 @@ namespace services.Controllers
 
         // PUT: api/Services/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Service service)
+        public async Task<ActionResult> Put(int id, [FromBody] Service service)
         {
-            var updatedService = _servicesService.UpdateService(id, service);
+            var updatedService = await _servicesService.UpdateService(id, service);
 
             if (updatedService == null)
             {
