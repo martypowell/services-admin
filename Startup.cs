@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using services.Providers;
 using services.Services;
 using System.Text;
+using Amazon.DynamoDBv2;
 
 namespace services
 {
@@ -34,9 +35,6 @@ namespace services
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            
-
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -77,9 +75,12 @@ namespace services
                 };
             });
 
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonDynamoDB>();
+
             // configure dependency injection
             services.AddScoped<IServicesService, ServicesService>();
-            services.AddScoped<IServicesProvider, JSONFileServiceProvider>();
+            services.AddScoped<IServicesProvider, DynamoDbServiceProvider>();
             services.AddScoped<IUsersService, UsersService>();
 
             // In production, the React files will be served from this directory
