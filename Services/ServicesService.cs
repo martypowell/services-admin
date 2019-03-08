@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using services.Models;
 using services.Providers;
 
@@ -15,23 +16,23 @@ namespace services.Services
             _serviceProvider = serviceProvider;
         }
 
-        public Service GetService(int id) =>
-            GetServices().FirstOrDefault(x => x.Id == id);
-
-        public IEnumerable<Service> GetServices() => _serviceProvider.GetServices();
-
-        public Service AddService(Service service)
+        public async Task<Service> GetService(int id)
         {
-            var newService  = _serviceProvider.AddService(service);
+            var services = await GetServices();
+            return services.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<IEnumerable<Service>> GetServices() => 
+            await _serviceProvider.GetServices();
+
+        public async Task<Service> AddService(Service service)
+        {
+            var newService  = await _serviceProvider.AddService(service);
 
             return service;
         }
 
-        public Service UpdateService(int id, Service service)
-        {
-            var updatedService = _serviceProvider.UpdateService(id, service);
-
-            return updatedService;
-        }
+        public async Task<Service> UpdateService(int id, Service service) =>
+            await _serviceProvider.UpdateService(id, service);
     }
 }
