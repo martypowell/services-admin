@@ -21,9 +21,9 @@ const App = () => {
     });
   }, []);
 
-  const handleInputFilterChange = changeEvent => {
-    const { value } = changeEvent.currentTarget;
-    const filterVal = value ? value.toLowerCase() : "";
+  const filterServices = () => {
+    const { filterValue, categoryFilters } = this.state;
+    const filterVal = filterValue ? filterValue.toLowerCase() : "";
     const filteredServices = services.filter(service => {
       var hasDescriptionMatch =
         service.description &&
@@ -31,15 +31,26 @@ const App = () => {
       var numberOfCategoryMatches = service.keywords.filter(
         keyword => keyword.toLowerCase().indexOf(filterVal) > -1
       ).length;
-      return hasDescriptionMatch || !!numberOfCategoryMatches;
-    });
+      var hasCategoryMatch =
+        categoryFilters.length === 0 ||
+        categoryFilters.includes(service.category);
 
-    setFilterValue(value);
+      return (
+        hasDescriptionMatch || !!numberOfCategoryMatches || hasCategoryMatch
+      );
+    });
     setFilteredServices(filteredServices);
+  };
+
+  const handleInputFilterChange = changeEvent => {
+    const { value } = changeEvent.currentTarget;
+    setFilterValue(value);
+    filterServices();
   };
 
   const handleCategoryFilterChange = filters => {
     setCategoryFilters(filters);
+    filterServices();
   };
 
   return (
