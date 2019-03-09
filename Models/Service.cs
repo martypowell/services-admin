@@ -11,7 +11,7 @@ namespace services.Models
         [DynamoDBRangeKey]
         public string Name { get; set; }
         public string Agency { get; set; }
-        public IEnumerable<string> Keywords { get; set; }
+        public List<string> Keywords { get; set; }
         public bool IsMostPopularService { get; set; }
     }
 }
