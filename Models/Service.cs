@@ -8,6 +8,7 @@ namespace services.Models
     {
         [DynamoDBHashKey]
         public int Id { get; set; }
+        [DynamoDBRangeKey]
         public string Name { get; set; }
         public string Agency { get; set; }
         public IEnumerable<string> Keywords { get; set; }
