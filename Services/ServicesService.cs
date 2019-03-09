@@ -16,7 +16,7 @@ namespace services.Services
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<Service> GetService(int id)
+        public async Task<Service> GetService(string id)
         {
             var services = await GetServices();
             return services.FirstOrDefault(x => x.Id == id);

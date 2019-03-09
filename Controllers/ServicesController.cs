@@ -49,7 +49,7 @@ namespace services.Controllers
 
         // GET: api/Services/5
         [HttpGet("{id}", Name = "Get")]
-        public async Task<Service> Get(int id)
+        public async Task<Service> Get(string id)
         {
             var cacheKey = $"{SERVICE_PREFIX_CACHE_KEY}-{id.ToString()}";
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.Model;
 using services.Models;
 
 namespace services.Providers
@@ -21,6 +22,9 @@ namespace services.Providers
 
         public async Task<Service> AddService(Service service)
         {
+            var newId = Guid.NewGuid();
+            service.Id = newId.ToString();
+
             await _dbContext.SaveAsync<Service>(service);
 
             return await _dbContext.LoadAsync<Service>(service.Id);

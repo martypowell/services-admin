@@ -49,7 +49,7 @@ namespace services.Providers
             return jsonArray.ToObject<IEnumerable<Service>>();
         }
 
-        public Service UpdateService(int id, Service service)
+        public Service UpdateService(string id, Service service)
         {
             var services = GetServices().ToList();
             var serviceToUpdate = services.FirstOrDefault(x => x.Id == id);

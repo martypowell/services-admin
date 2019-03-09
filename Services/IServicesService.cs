@@ -15,9 +15,9 @@ namespace services.Services
         /// <summary>
         /// Get a Service by it's service id
         /// </summary>
-        /// <param name="id">Primary Key associated with the service.</param>
+        /// <param name="id">Primary Key associated with the service. This is a Guid</param>
         /// <returns></returns>
-        Task<Service> GetService(int id);
+        Task<Service> GetService(string id);
 
         /// <summary>
         /// Save a Service

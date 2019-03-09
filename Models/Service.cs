@@ -7,7 +7,7 @@ namespace services.Models
     public class Service
     {
         [DynamoDBHashKey]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [DynamoDBRangeKey]
         public string Name { get; set; }
         public string Agency { get; set; }
