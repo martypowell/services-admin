@@ -3,6 +3,7 @@ import "./App.css";
 import categoriesData from "./data/categories.json";
 import { fetchServices } from "./shared/Services";
 import { List, Card, Icon, Input, Tag, Checkbox } from "antd";
+import ServiceCard from "./components/ServiceCard";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -68,18 +69,7 @@ const App = () => {
             md: 4
           }}
           dataSource={filteredServices}
-          renderItem={service => (
-            <List.Item>
-              <Card
-                title={service.name}
-                extra={service.isMostPopularService && <Icon type="star" />}
-              >
-                {service.keywords.map((keyword, keywordIndex) => (
-                  <Tag key={keywordIndex}>{keyword}</Tag>
-                ))}
-              </Card>
-            </List.Item>
-          )}
+          renderItem={service => <ServiceCard service={service} />}
         />
       </section>
     </div>
