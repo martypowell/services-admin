@@ -22,12 +22,11 @@ namespace services.Providers
 
         public async Task<Service> AddService(Service service)
         {
-            var newId = Guid.NewGuid();
-            service.Id = newId.ToString();
+            service.Id = Guid.NewGuid().ToString();
 
-            await _dbContext.SaveAsync<Service>(service);
+            await _dbContext.SaveAsync(service);
 
-            return await _dbContext.LoadAsync<Service>(service.Id);
+            return await _dbContext.LoadAsync(service);
         }
 
         public async Task<IEnumerable<Service>> GetServices()
@@ -38,14 +37,14 @@ namespace services.Providers
 
         public async Task<Service> UpdateService(int id, Service service)
         {
-            var serviceToUpdate = await _dbContext.LoadAsync<Service>(service.Id);
+            var serviceToUpdate = await _dbContext.LoadAsync(service);
 
             // Set db service to the updated value
             serviceToUpdate = service;
 
             await _dbContext.SaveAsync(serviceToUpdate);
 
-            return await _dbContext.LoadAsync<Service>(service.Id);
+            return await _dbContext.LoadAsync(service);
         }
     }
 }
