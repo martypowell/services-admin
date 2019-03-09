@@ -1,0 +1,11 @@
+@import "~antd/dist/antd.css";
+
+body {
+  max-width: 1600px;
+  width: 100%;
+  margin: 15px auto;
+}
+
+.section {
+  margin: 15px auto;
+}

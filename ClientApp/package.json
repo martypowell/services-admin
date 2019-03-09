@@ -1,22 +1,27 @@
 {
-  "name": "services",
+  "name": "services-checkout",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.13.6",
-    "bootstrap": "^3.3.7",
-    "react": "^16.0.0",
-    "react-bootstrap": "^0.31.5",
-    "react-dom": "^16.0.0",
-    "react-router-bootstrap": "^0.24.4",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
-    "rimraf": "^2.6.2"
+    "antd": "^3.13.2",
+    "prettier": "^1.16.4",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-scripts": "2.1.5"
   },
   "scripts": {
-    "start": "rimraf ./build && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
-  }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

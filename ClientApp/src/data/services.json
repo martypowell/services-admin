@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "description": "Pothole",
+    "categories": ["Road and Sidewalk", "Public Works"],
+    "icon": "fa-pothole",
+    "isMostPopularService": true
+  },
+  {
+    "id": 2,
+    "description": "Icy Conditions",
+    "categories": ["Road and Sidewalk", "Public Works"],
+    "icon": "fa-ice",
+    "isMostPopularService": false
+  },
+  {
+    "id": 3,
+    "description": "Unplowed Road",
+    "categories": ["Road and Sidewalk", "Public Works"],
+    "icon": "fa-plow",
+    "isMostPopularService": false
+  },
+  {
+    "id": 4,
+    "description": "Recyling Not Collected",
+    "categories": ["Trash and Recycling", "Public Works"],
+    "icon": "fa-recycle",
+    "isMostPopularService": true
+  }
+]
