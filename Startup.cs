@@ -41,18 +41,18 @@ namespace services
             services.AddMemoryCache();
 
             // configure cors
-            services.AddCors(
-                options =>
-                {
-                    options.AddPolicy(
-                        MyAllowSpecificOrigins,
-                        builder =>
-                        {
-                            builder.WithOrigins(
-                                "http://localhost",
-                                "http://localhost:3000");
-                        });
-                });
+            //services.AddCors(
+            //    options =>
+            //    {
+            //        options.AddPolicy(
+            //            MyAllowSpecificOrigins,
+            //            builder =>
+            //            {
+            //                builder.WithOrigins(
+            //                    "http://localhost",
+            //                    "http://localhost:3000");
+            //            });
+            //    });
 
             // Configure JWT authentication
             var appSettings = Configuration.GetSection("AppSettings");
