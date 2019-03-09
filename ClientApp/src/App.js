@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import "./App.css";
 import categoriesData from "./data/categories.json";
 import { fetchServices } from "./shared/Services";
@@ -14,21 +14,13 @@ const App = () => {
   const [filterValue, setFilterValue] = useState("");
   const [categoryFilters, setCategoryFilters] = useState([]);
 
-  useEffect(() => {
-    fetchServices(services => {
-      setServices(services);
-      setFilteredServices(services);
-    });
-  }, []);
-
   const filterServices = () => {
-    const { filterValue, categoryFilters } = this.state;
     const filterVal = filterValue ? filterValue.toLowerCase() : "";
     const filteredServices = services.filter(service => {
       var hasDescriptionMatch =
         service.description &&
         service.description.toLowerCase().indexOf(filterVal) > -1;
-      var numberOfCategoryMatches = service.keywords.filter(
+      var numberOfKeywordMatches = service.keywords.filter(
         keyword => keyword.toLowerCase().indexOf(filterVal) > -1
       ).length;
       var hasCategoryMatch =
@@ -36,7 +28,7 @@ const App = () => {
         categoryFilters.includes(service.category);
 
       return (
-        hasDescriptionMatch || !!numberOfCategoryMatches || hasCategoryMatch
+        (hasDescriptionMatch || !!numberOfKeywordMatches) && hasCategoryMatch
       );
     });
     setFilteredServices(filteredServices);
@@ -45,13 +37,26 @@ const App = () => {
   const handleInputFilterChange = changeEvent => {
     const { value } = changeEvent.currentTarget;
     setFilterValue(value);
-    filterServices();
   };
 
   const handleCategoryFilterChange = filters => {
     setCategoryFilters(filters);
-    filterServices();
   };
+
+  useEffect(() => {
+    fetchServices(services => {
+      setServices(services);
+      setFilteredServices(services);
+    });
+  }, []);
+
+  useEffect(() => {
+    filterServices();
+  }, [filterValue]);
+
+  useEffect(() => {
+    filterServices();
+  }, [categoryFilters]);
 
   return (
     <div className="services">
