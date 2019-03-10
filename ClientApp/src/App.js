@@ -13,8 +13,8 @@ const App = () => {
       <Layout>
         <Route exact path="/" component={ServicesList} />
         <Route exact path="/admin" component={Admin} />
-        <Route exact path="/services/:id" component={ServicesList} />
-        <Route exact path="/categories/:id" component={Categories} />
+        <Route exact path="/services/:id?" component={ServicesList} />
+        <Route exact path="/categories/:id?" component={Categories} />
         <Route exact path="/keywords" component={KeywordList} />
       </Layout>
     </Router>

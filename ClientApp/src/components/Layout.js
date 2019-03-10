@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from "antd";
 
 const { Header, Content, Footer } = Layout;
@@ -13,9 +14,15 @@ const AdminLayout = props => (
         defaultSelectedKeys={["2"]}
         style={{ lineHeight: "64px" }}
       >
-        <Menu.Item key="1">Services</Menu.Item>
-        <Menu.Item key="2">Categories</Menu.Item>
-        <Menu.Item key="3">Keywords</Menu.Item>
+        <Menu.Item key="1">
+          <Link to="/services">Services</Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/categories">Categories</Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Link to="/keywords">Keywords</Link>
+        </Menu.Item>
       </Menu>
     </Header>
     <Content style={{ padding: "0 50px" }}>
