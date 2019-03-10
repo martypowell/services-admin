@@ -7,18 +7,24 @@ import Layout from "./components/Layout";
 import KeywordList from "./components/Keywords";
 import Categories from "./components/Categories";
 import Login from "./components/Admin/Login";
+import { store } from "./actions/index";
+import { Provider } from "react-redux";
+
+store.subscribe(() => console.log(store.getState()));
 
 const App = () => {
   return (
-    <Router>
-      <Layout>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/services/:id?" component={ServicesList} />
-        <Route exact path="/categories/:id?" component={Categories} />
-        <Route exact path="/keywords" component={KeywordList} />
-      </Layout>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Layout>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/services/:id?" component={ServicesList} />
+          <Route exact path="/categories/:id?" component={Categories} />
+          <Route exact path="/keywords" component={KeywordList} />
+        </Layout>
+      </Router>
+    </Provider>
   );
 };
 

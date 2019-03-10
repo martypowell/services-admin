@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Icon, Input, Button } from "antd";
 import { Login } from "../../shared/Login";
+import { connect } from "react-redux";
 
 const LoginForm = props => {
   const [userInfo, setUserInfo] = useState({});
@@ -11,6 +12,7 @@ const LoginForm = props => {
         const { username, password } = values;
         Login(username, password).then(userInfo => {
           if (userInfo) {
+            props.dispatch({ type: "SET", userInfo });
             setUserInfo(userInfo);
           }
         });
@@ -22,6 +24,9 @@ const LoginForm = props => {
   return (
     <div className="login">
       <h1>Login</h1>
+      <p>
+        Logged in user: {props.userInfo.firstName} {props.userInfo.lastName}
+      </p>
       <Form onSubmit={handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator("username", {
@@ -58,6 +63,12 @@ const LoginForm = props => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    userInfo: state
+  };
+};
+
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
 
-export default WrappedNormalLoginForm;
+export default connect(mapStateToProps)(WrappedNormalLoginForm);
