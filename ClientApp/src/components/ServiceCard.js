@@ -10,6 +10,7 @@ const ServiceCard = props => {
         title={service.name}
         extra={service.isMostPopularService && <Icon type="star" />}
       >
+        <p>{service.agency}</p>
         {service.keywords.map((keyword, keywordIndex) => (
           <Tag key={keywordIndex}>{keyword}</Tag>
         ))}
