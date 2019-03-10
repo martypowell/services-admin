@@ -9,6 +9,7 @@ import Categories from "./components/Categories";
 import Login from "./components/Admin/Login";
 import { store } from "./actions/index";
 import { Provider } from "react-redux";
+import ServiceForm from "./components/ServiceForm";
 
 store.subscribe(() => console.log(store.getState()));
 
@@ -19,7 +20,8 @@ const App = () => {
         <Layout>
           <Route exact path="/" component={Login} />
           <Route exact path="/admin" component={Admin} />
-          <Route exact path="/services/:id?" component={ServicesList} />
+          <Route exact path="/services" component={ServicesList} />
+          <Route exact path="/services/:id" component={ServiceForm} />
           <Route exact path="/categories/:id?" component={Categories} />
           <Route exact path="/keywords" component={KeywordList} />
         </Layout>
