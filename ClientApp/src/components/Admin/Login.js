@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Form, Icon, Input, Button } from "antd";
 import { Login } from "../../shared/Login";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const LoginForm = props => {
-  const [userInfo, setUserInfo] = useState({});
   const handleSubmit = submitEvent => {
     submitEvent.preventDefault();
     props.form.validateFields((err, values) => {
@@ -13,7 +13,7 @@ const LoginForm = props => {
         Login(username, password).then(userInfo => {
           if (userInfo) {
             props.dispatch({ type: "SET", userInfo });
-            setUserInfo(userInfo);
+            props.history.push("/services");
           }
         });
       }
