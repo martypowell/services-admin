@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Icon, Input, Button } from "antd";
 import { Login } from "../../shared/Login";
 
 const LoginForm = props => {
+  const [userInfo, setUserInfo] = useState({});
   const handleSubmit = submitEvent => {
     submitEvent.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
         const { username, password } = values;
-        Login(username, password).then(response =>
-          console.log("got respones from service", response)
-        );
+        Login(username, password).then(userInfo => {
+          if (userInfo) {
+            setUserInfo(userInfo);
+          }
+        });
       }
     });
   };
