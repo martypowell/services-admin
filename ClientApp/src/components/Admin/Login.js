@@ -8,7 +8,6 @@ const LoginForm = props => {
     submitEvent.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         const { username, password } = values;
         Login(username, password).then(userInfo => {
           if (userInfo) {
