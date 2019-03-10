@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import categoriesData from "../data/categories.json";
 import { fetchServices } from "../shared/Services";
-import { List, Input, Checkbox } from "antd";
+import { List, Input, Checkbox, Button } from "antd";
 import ServiceCard from "./ServiceCard";
+import { withRouter } from "react-router-dom";
 
 const CheckboxGroup = Checkbox.Group;
 
-const ServicesList = () => {
+const ServicesList = props => {
   const [services, setServices] = useState([]);
   const [categories] = useState(categoriesData);
   const [filteredServices, setFilteredServices] = useState([]);
@@ -24,7 +25,7 @@ const ServicesList = () => {
       ).length;
       var hasCategoryMatch =
         categoryFilters.length === 0 ||
-        categoryFilters.includes(service.category);
+        categoryFilters.includes(service.agency);
 
       return (
         (hasDescriptionMatch || !!numberOfKeywordMatches) && hasCategoryMatch
@@ -40,6 +41,10 @@ const ServicesList = () => {
 
   const handleCategoryFilterChange = filters => {
     setCategoryFilters(filters);
+  };
+
+  const handleNewServiceClick = props => {
+    props.history.push("/services/0");
   };
 
   useEffect(() => {
@@ -60,6 +65,9 @@ const ServicesList = () => {
   return (
     <div className="services">
       <h1>Request Service or Report a Problem</h1>
+      <Button onClick={handleNewServiceClick} type="primary" icon="plus">
+        Add Service
+      </Button>
       <section className="section">
         <CheckboxGroup
           options={categories}
