@@ -12,12 +12,8 @@ import { createStore } from "redux";
  * follows a different convention (such as function maps) if it makes sense for your
  * project.
  */
-const intialState = {
-  firstName: "fart",
-  lastName: "mccfarty"
-};
 
-function userInfo(state = intialState, action) {
+function userInfo(state = {}, action) {
   switch (action.type) {
     case "SET":
       return Object.assign({}, action.userInfo);
