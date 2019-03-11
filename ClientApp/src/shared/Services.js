@@ -1,5 +1,12 @@
-const fetchServices = async callback => {
-  fetch("/api/services")
+const getRequestHeaders = token => new Headers({
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json"
+});
+
+const fetchServices = async (authorization, callback) => {
+    fetch("/api/services", {
+        headers: getRequestHeaders(authorization.token)
+    })
     .then(response => {
       return response
         ? response.json()
@@ -17,12 +24,9 @@ const addService = (service, authorization) => {
   const postData = JSON.stringify(service);
 
   return fetch("/api/service/0", {
-    method: "post",
-    headers: new Headers({
-      Authorization: `Bearer ${authorization.token}`,
-      "Content-Type": "application/json"
-    }),
-    body: postData
+      method: "post",
+      headers: getRequestHeaders(authorization.token),
+      body: postData
   })
     .then(response => {
       return response
