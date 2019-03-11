@@ -34,7 +34,7 @@ namespace services
             Configuration = builder.Build();
             Env = env;
 
-            // SetElasticBeanstalkConfig();
+            SetElasticBeanstalkConfig();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
