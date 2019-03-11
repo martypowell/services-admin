@@ -31,6 +31,6 @@ namespace services.Services
         /// <param name="id">Primary Key associated with the service.</param>
         /// <param name="service">Updated representation of the Existing service.</param>
         /// <returns></returns>
-        Task<Service> UpdateService(int id, Service service);
+        Task<Service> UpdateService(string id, Service service);
     }
 }

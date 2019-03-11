@@ -35,7 +35,7 @@ namespace services.Providers
                 .GetRemainingAsync();
         }
 
-        public async Task<Service> UpdateService(int id, Service service)
+        public async Task<Service> UpdateService(string id, Service service)
         {
             var serviceToUpdate = await _dbContext.LoadAsync(service);
 

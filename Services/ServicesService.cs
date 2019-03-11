@@ -32,7 +32,7 @@ namespace services.Services
             return service;
         }
 
-        public async Task<Service> UpdateService(int id, Service service) =>
+        public async Task<Service> UpdateService(string id, Service service) =>
             await _serviceProvider.UpdateService(id, service);
     }
 }

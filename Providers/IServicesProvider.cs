@@ -10,7 +10,7 @@ namespace services.Providers
         Task<Service> AddService(
             Service service);
         Task<Service> UpdateService(
-            int id,
+            string id,
             Service service);
     }
 }

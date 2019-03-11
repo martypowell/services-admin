@@ -86,7 +86,7 @@ namespace services.Controllers
 
         // PUT: api/Services/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] Service service)
+        public async Task<ActionResult> Put(string id, [FromBody] Service service)
         {
             var updatedService = await _servicesService.UpdateService(id, service);
 
