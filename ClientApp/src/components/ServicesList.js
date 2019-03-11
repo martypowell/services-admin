@@ -4,6 +4,7 @@ import { fetchServices } from "../shared/Services";
 import { List, Input, Checkbox, Button } from "antd";
 import ServiceCard from "./ServiceCard";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -43,12 +44,12 @@ const ServicesList = props => {
     setCategoryFilters(filters);
   };
 
-  const handleNewServiceClick = props => {
+  const handleNewServiceClick = () => {
     props.history.push("/services/0");
   };
 
   useEffect(() => {
-    fetchServices(services => {
+    fetchServices(props.userInfo, services => {
       setServices(services);
       setFilteredServices(services);
     });
@@ -56,11 +57,7 @@ const ServicesList = props => {
 
   useEffect(() => {
     filterServices();
-  }, [filterValue]);
-
-  useEffect(() => {
-    filterServices();
-  }, [categoryFilters]);
+  }, [categoryFilters, filterValue]);
 
   return (
     <div className="services">
@@ -98,5 +95,10 @@ const ServicesList = props => {
     </div>
   );
 };
+const mapStateToProps = state => {
+  return {
+    userInfo: state
+  };
+};
 
-export default ServicesList;
+export default withRouter(connect(mapStateToProps)(ServicesList));
