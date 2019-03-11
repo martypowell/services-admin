@@ -43,8 +43,7 @@ namespace services.Services
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var secret = _config.GetSection("AppSettings:Secret")?.Value;
-            var key = Encoding.ASCII.GetBytes(secret);
+            var key = Utilities.GetTokenSecret();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

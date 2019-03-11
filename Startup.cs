@@ -11,6 +11,8 @@ using services.Services;
 using System.Text;
 using Amazon.DynamoDBv2;
 using System;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace services
 {
@@ -31,6 +33,8 @@ namespace services
 
             Configuration = builder.Build();
             Env = env;
+
+            // SetElasticBeanstalkConfig();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -56,8 +60,7 @@ namespace services
             //    });
 
             // Configure JWT authentication
-            var appSettings = Configuration.GetSection("AppSettings");
-            var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("TokenSecret"));
+            var tokenSecret = Utilities.GetTokenSecret();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,7 +73,7 @@ namespace services
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new SymmetricSecurityKey(tokenSecret),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -91,15 +94,15 @@ namespace services
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+            // }
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //    app.UseHsts();
+            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -122,6 +125,30 @@ namespace services
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+
+        private static void SetElasticBeanstalkConfig()
+        {
+            var tempConfigBuilder = new ConfigurationBuilder();
+
+            tempConfigBuilder.AddJsonFile(
+                @"C:\Program Files\Amazon\ElasticBeanstalk\config\containerconfiguration",
+                optional: true,
+                reloadOnChange: true
+            );
+
+            var configuration = tempConfigBuilder.Build();
+
+            var ebEnv =
+                configuration.GetSection("iis:env")
+                    .GetChildren()
+                    .Select(pair => pair.Value.Split(new[] { '=' }, 2))
+                    .ToDictionary(keypair => keypair[0], keypair => keypair[1]);
+
+            foreach (var keyVal in ebEnv)
+            {
+                Environment.SetEnvironmentVariable(keyVal.Key, keyVal.Value);
+            }
         }
     }
 }
