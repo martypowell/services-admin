@@ -10,6 +10,7 @@ using services.Services;
 
 namespace services.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class ServicesController : ControllerBase
@@ -65,7 +66,6 @@ namespace services.Controllers
             return service;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // POST: api/Services
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Service service)
@@ -84,7 +84,6 @@ namespace services.Controllers
                 newService);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // PUT: api/Services/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Service service)
