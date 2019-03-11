@@ -71,4 +71,4 @@ const mapStateToProps = state => {
 
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
 
-export default connect(mapStateToProps)(WrappedNormalLoginForm);
+export default withRouter(connect(mapStateToProps)(WrappedNormalLoginForm));
