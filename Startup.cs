@@ -10,6 +10,7 @@ using services.Providers;
 using services.Services;
 using System.Text;
 using Amazon.DynamoDBv2;
+using System;
 
 namespace services
 {
@@ -56,7 +57,7 @@ namespace services
 
             // Configure JWT authentication
             var appSettings = Configuration.GetSection("AppSettings");
-            var key = Encoding.ASCII.GetBytes(appSettings["Secret"]);
+            var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("TokenSecret"));
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
