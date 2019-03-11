@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from "antd";
+import { connect } from "react-redux";
 
 const { Header, Content, Footer } = Layout;
 
@@ -23,6 +24,16 @@ const AdminLayout = props => (
         <Menu.Item key="3">
           <Link to="/keywords">Keywords</Link>
         </Menu.Item>
+        <Menu.Item key="4" style={{ float: "right " }}>
+          <span>
+            {props.userInfo &&
+              Object.prototype.hasOwnProperty.call(
+                props.userInfo,
+                "firstName"
+              ) && <span>Hi, {props.userInfo.firstName}</span>}
+            Hi, {props.userInfo.firstName}
+          </span>
+        </Menu.Item>
       </Menu>
     </Header>
     <Content style={{ padding: "0 50px" }}>
@@ -36,4 +47,10 @@ const AdminLayout = props => (
   </Layout>
 );
 
-export default AdminLayout;
+const mapStateToProps = state => {
+  return {
+    userInfo: state
+  };
+};
+
+export default connect(mapStateToProps)(AdminLayout);
