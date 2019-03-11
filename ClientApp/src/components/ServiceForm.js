@@ -2,10 +2,12 @@ import React from "react";
 import { Form, Select, Input, Button, Checkbox } from "antd";
 import { addService } from "../shared/Services";
 import categories from "../data/categories";
+import { connect } from "react-redux";
 
 const Option = Select.Option;
 
 const agencies = categories;
+
 const keywords = ["street", "road", "safety", "pothole", "snow"];
 
 const saveService = service => {
@@ -22,10 +24,13 @@ const ServiceForm = props => {
     submitEvent.preventDefault();
     validateFields((err, values) => {
       if (!err) {
-        saveService(values);
+        saveService(values, props.userInfo)
+          .then(console.log)
+          .catch(console.error);
       }
     });
   };
+
   return (
     <section>
       <h1>Add a Service</h1>
@@ -68,9 +73,9 @@ const ServiceForm = props => {
                   .indexOf(input.toLowerCase()) >= 0
               }
             >
-              {agencies.map(dept => (
-                <Option key={dept.Id} value={dept.Id}>
-                  {dept.Name}
+              {agencies.map((agency, agencyIndex) => (
+                <Option key={agencyIndex} value={agency}>
+                  {agency}
                 </Option>
               ))}
             </Select>
@@ -119,4 +124,10 @@ const ServiceForm = props => {
 
 const WrappedServiceForm = Form.create({ name: "service_form" })(ServiceForm);
 
-export default WrappedServiceForm;
+const mapStateToProps = state => {
+  return {
+    userInfo: state
+  };
+};
+
+export default connect(mapStateToProps)(WrappedServiceForm);
